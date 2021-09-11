@@ -21,10 +21,16 @@ public class ControladorPersona {
         return servicio.listar();
     }
 
+    //Guarda la persona
     @PostMapping(value="/guardarPersona")
     public Persona guardarPersona(@RequestBody Persona persona){
         return servicio.guardar(persona);
     }
+
+    @DeleteMapping(value="/eliminarPersona")
+    public void eliminarPersona(@RequestBody Integer id){ servicio.borrar(id);}
+
+
 
 
 

@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class ServiciosPersona implements InterfazServiciosPersona{
+public class ServiciosPersona implements InterfazServiciosPersona {
 
     @Autowired
     private InterfazRepositorioPersona data;
@@ -28,9 +29,7 @@ public class ServiciosPersona implements InterfazServiciosPersona{
     }
 
     @Override
-    public void borrar(int id) {
-
-    }
+    public void borrar(Integer id) { data.deleteById(id);  }
 
     @Override
     public Persona actualizar(Persona persona) {
