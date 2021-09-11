@@ -6,6 +6,9 @@ import com.sofkau.crudPerson.servicios.InterfazServiciosPersona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 
 //contiene los métodos de acceso para consumir a servicios
 //Identifica metodo, url, llegada de parametros y que servicio implementará
@@ -27,10 +30,13 @@ public class ControladorPersona {
         return servicio.guardar(persona);
     }
 
+    //Elimina la persona con cierto id de la base de datos
     @DeleteMapping(value="/eliminarPersona")
     public void eliminarPersona(@RequestBody Integer id){ servicio.borrar(id);}
 
-
+    // Devuelve la persona con determinado id
+    @GetMapping(value="/listarPorId")
+    public Optional<Persona> obtenerPorId(@RequestBody Integer id){ return servicio.listarId(id); }
 
 
 
