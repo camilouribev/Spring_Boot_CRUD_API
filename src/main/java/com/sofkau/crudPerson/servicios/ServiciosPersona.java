@@ -24,16 +24,8 @@ public class ServiciosPersona implements InterfazServiciosPersona {
     }
 
     @Override
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Persona listarId(Integer id) {
-        Optional<Persona> match = data.findById(id);
-
-        if(match.isEmpty()){
-            throw new NoSuchElementException( id + " no existe en la base de datos  .");
-        }
-        return match.get();
-
-
+    public Optional<Persona> listarId(Integer id) {
+        return data.findById(id);
     }
 
     @Override
@@ -46,10 +38,16 @@ public class ServiciosPersona implements InterfazServiciosPersona {
 
     @Override
     public Persona actualizar(Persona persona, Integer id) {
-        Persona aSerModificado = data.findById(id).orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
-        aSerModificado.setEdad(persona.getEdad());
-        aSerModificado.setNombre(persona.getNombre());
-        return data.save(aSerModificado);
+        Optional<Persona> aSerModificado = data.findById(id);
+        try{
+            Persona actualizado = aSerModificado.get();
+            actualizado.setEdad(persona.getEdad());
+            actualizado.setNombre(persona.getNombre());
+            data.save(actualizado);
+            return actualizado;
+        }catch(Exception e){return null;}
+
+
     }
 
 
