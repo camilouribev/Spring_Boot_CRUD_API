@@ -4,9 +4,11 @@ package com.sofkau.crudPerson.controlador;
 import com.sofkau.crudPerson.entidades.Persona;
 import com.sofkau.crudPerson.servicios.InterfazServiciosPersona;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -19,7 +21,7 @@ public class ControladorPersona {
     private InterfazServiciosPersona servicio;
 
     //devuelve lista de personas. Es iterable porque devuelve datos tipo arreglo
-    @GetMapping(value= "/listarPersonas")
+    @GetMapping(value= "/personas")
     public Iterable<Persona>listarPersonas(){
         return servicio.listar();
     }
@@ -31,12 +33,17 @@ public class ControladorPersona {
     }
 
     //Elimina la persona con cierto id de la base de datos
-    @DeleteMapping(value="/eliminarPersona")
-    public void eliminarPersona(@RequestBody Integer id){ servicio.borrar(id);}
+    @DeleteMapping(value="/eliminar/{id}")
+    public void eliminarPersona(@PathVariable Integer id){ servicio.borrar(id);}
 
     // Devuelve la persona con determinado id
-    @GetMapping(value="/listarPorId")
-    public Optional<Persona> obtenerPorId(@RequestBody Integer id){ return servicio.listarId(id); }
+    @GetMapping(value="/persona/{id}")
+
+    public Persona obtenerPorId(@PathVariable Integer id){ return servicio.listarId(id); }
+
+    //Actualiza un registro
+    @PutMapping(value="/actualizar/{id}")
+    public  void actualizarPersona(@RequestBody Persona persona, @PathVariable Integer id){servicio.actualizar(persona, id);}
 
 
 
