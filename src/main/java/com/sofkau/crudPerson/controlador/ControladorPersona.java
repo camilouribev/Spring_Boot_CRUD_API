@@ -4,14 +4,9 @@ package com.sofkau.crudPerson.controlador;
 import com.sofkau.crudPerson.entidades.Persona;
 import com.sofkau.crudPerson.servicios.InterfazServiciosPersona;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMessage;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -30,13 +25,13 @@ public class ControladorPersona {
     }
 
     //Guarda la persona
-    @PostMapping(value = "/guardarPersona")
+    @PostMapping(value = "/persona")
     public Persona guardarPersona(@RequestBody Persona persona) {
         return servicio.guardar(persona);
     }
 
     //Elimina la persona con cierto id de la base de datos
-    @DeleteMapping(value = "/eliminar/{id}")
+    @DeleteMapping(value = "/persona/{id}")
     public ResponseEntity<Object> eliminarPersona(@PathVariable Integer id) {
         try {
             servicio.borrar(id);
@@ -56,9 +51,10 @@ public class ControladorPersona {
     }
 
     //Actualiza un registro
-    @PutMapping(value = "/actualizar/{id}")
+    @PutMapping(value = "/persona/{id}")
     public ResponseEntity<Persona> actualizarPersona(@RequestBody Persona persona, @PathVariable Integer id) {
         Persona actualizado = servicio.actualizar(persona, id);
+
         return actualizado == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(actualizado);
 
     }
